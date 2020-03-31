@@ -1,0 +1,174 @@
+﻿@inject SignInManager<User> signInManager;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MVCProject</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/css/all.min.css" rel="stylesheet" />
+    <link href="~/css/fontawesome.min.css" rel="stylesheet" />
+    @*<link rel="stylesheet" href="~/css/site.css" />*@
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/Search.css" rel="stylesheet" />
+    <link href="~/css/About.css" rel="stylesheet" />
+    <link href="~/css/Friends.css" rel="stylesheet" />
+    <link href="~/css/Profile.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+
+
+</head>
+<body class="row p-0 m-0">
+    <div class="header1 col-12 p-0">
+        <form method="get" id="searchForm" asp-controller="Profile" asp-action="Search" class="searchAndIcon">
+            <div id="" class="facebookIcon">
+                <i class="fab fa-facebook-square"></i>
+            </div>
+            <div id="" class=""><input placeholder="Search " type="text" id="searchText" name="searchText" class="searchbox" /></div>
+            <div class="input-group-append">
+                <button form="searchForm" id="searchButton">
+                    <i class="fa fa-search" id="searchIcon" aria-hidden="true"></i>
+                </button>
+            </div>
+        </form>
+
+        <div class="connectionIcon">
+            <div id="" class="profilearea">
+                <a href="#">
+                    <img src="~/Images/prof.png" class="profpic" />
+                </a>
+            </div>
+            <div class="collectionOfNavICon">
+
+                <div id="" class="profilearea1"><a href="#">Profile</a></div>
+
+                <div id="" class="profilearea4"><a href="#">Home</a></div>
+
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <form method="post" asp-action="Logout" asp-controller="Start">
+                            <button type="submit" class="nav-link btn btn-link py-0"
+                                    style="width:auto;
+                                    color:white;
+                                    font-weight:bold;
+                                    margin-right:20px">
+                                Logout @User.Identity.Name
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+
+                <div id="" class="findf">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div id="" class="message">
+                    <i class="fab fa-facebook-messenger"></i>
+                </div>
+                <div id="" class="notification">
+                    <i class="fas fa-bell"></i>
+                </div>
+
+
+                <a asp-controller="Settings" asp-action="Index">
+                    <div id="" class="setting">
+                        <i class="fas fa-cog">
+                        </i>
+                    </div>
+                </a>
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="PageBody col-12 p-0">
+
+        <div class="FacebookContent col-10 p-0">
+            @RenderBody()
+        </div>
+
+        <div class="chat-sidebarRight col-2 p-0">
+            <div class="friendList">
+                <div class="frinedImg">
+                    <img src="~/Images/prof.png" alt="">
+                </div>
+                <div class="friendName">Sara Atef</div>
+            </div>
+            <div class="friendList">
+                <div class="frinedImg">
+                    <img src="~/Images/prof.png" alt="">
+                </div>
+                <div class="friendName">Sara Atef</div>
+            </div>
+            <div class="friendList">
+                <div class="frinedImg">
+                    <img src="~/Images/prof.png" alt="">
+                </div>
+                <div class="friendName">Sara Atef</div>
+            </div>
+            <div class="friendList">
+                <div class="frinedImg">
+                    <img src="~/Images/prof.png" alt="">
+                </div>
+                <div class="friendName">Sara Atef</div>
+            </div>
+            <div class="friendList">
+                <div class="frinedImg">
+                    <img src="~/Images/prof.png" alt="">
+                </div>
+                <div class="friendName">Sara Atef</div>
+            </div>
+            <div class="friendList">
+                <div class="frinedImg">
+                    <img src="~/Images/prof.png" alt="">
+                </div>
+                <div class="friendName">Sara Atef</div>
+            </div>
+            <div class="friendList">
+                <div class="frinedImg">
+                    <img src="~/Images/prof.png" alt="">
+                </div>
+                <div class="friendName">Sara Atef</div>
+            </div>
+            <div class="friendList">
+                <div class="frinedImg">
+                    <img src="~/Images/prof.png" alt="">
+                </div>
+                <div class="friendName">Sara Atef</div>
+            </div>
+            <div class="friendList">
+                <div class="frinedImg">
+                    <img src="~/Images/prof.png" alt="">
+                </div>
+                <div class="friendName">Sara Atef</div>
+            </div>
+            <div class="friendList">
+                <div class="frinedImg">
+                    <img src="~/Images/prof.png" alt="">
+                </div>
+                <div class="friendName">Sara Atef</div>
+            </div>
+            <div class="friendList">
+                <div class="frinedImg">
+                    <img src="~/Images/prof.png" alt="">
+                </div>
+                <div class="friendName">Sara Atef</div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/AutoTextAreaResize.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/custom.js"></script>
+    <script src="~/js/Search.js"></script>
+    <script src="~/js/Profile.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
