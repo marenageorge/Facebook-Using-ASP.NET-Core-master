@@ -73,7 +73,7 @@ namespace MVCProject.Controllers
                 return NotFound();
             }
             users.Remove(GetCurrentUser());
-            
+            int x;
             return View(users);
         }
 
