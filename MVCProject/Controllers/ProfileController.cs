@@ -248,7 +248,6 @@ namespace MVCProject.Controllers
                 commentRepository.Update(0, result);
             }
             return Json(result.PostId);
-            int x;
         }
 
     }
