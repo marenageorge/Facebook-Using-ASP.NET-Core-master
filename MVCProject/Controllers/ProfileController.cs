@@ -91,8 +91,13 @@ namespace MVCProject.Controllers
             foreach(var p in u.Posts)
             {
                 p.Likes = likeRepository.SelectAll().Where(x => x.PostId == p.PostId).ToList();
+                foreach (var l in p.Likes)
+                {
+                    l.User = userRepository.SelectAll().SingleOrDefault(us => us.Id == l.UserId);
+                }
                 p.Comments = commentRepository.SelectAll().Where(x => x.PostId == p.PostId).ToList();
             }
+            
             //u.Comments = u.Comments.OrderByDescending(p => p.CommentDateTime).ToList();
             return View(GetCurrentUser());
         }
@@ -135,7 +140,7 @@ namespace MVCProject.Controllers
                 userRepository.Update(GetCurrentUser().Id, GetCurrentUser());
             }
 
-            return View("Profile",GetCurrentUser());
+            return RedirectToAction("Profile");
         }
 
         public IActionResult Friend_Profile(string id)

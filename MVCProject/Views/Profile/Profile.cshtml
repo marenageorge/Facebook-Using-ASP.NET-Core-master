@@ -135,7 +135,69 @@
 
                     <div class="row p-0 m-0 mt-3">
                         <div class="col-12">
-                            <a href="#" class="ListOfLikes">Sara Atef Liked This And 15 Other</a>
+                            @{ int likesNumber = item.Likes.Count - 1;}
+                            @if (item.Likes.Where(l => l.IsLiked == true).Any(l => l.UserId == Model.Id))
+                            {
+                                if (likesNumber == 0)
+                                {
+                                    <a href="" data-toggle="modal" data-target="#likesList_@item.PostId" class="ListOfLikes">You liked this</a>
+                                }
+                                else
+                                {
+                                    <a href="" data-toggle="modal" data-target="#likesList_@item.PostId" class="ListOfLikes">You liked this and @likesNumber other</a>
+                                }
+                            }
+                            else
+                            {
+                                if (likesNumber == 0)
+                                {
+                                    <a href="" data-toggle="modal" data-target="likesList_@item.PostId" class="ListOfLikes">@item.Likes.First().User.UserFirstName @item.Likes.First().User.UserLastName liked this and @likesNumber Other</a>
+                                }
+                                else
+                                {
+                        <a href="" data-toggle="modal" data-target="likesList_@item.PostId" class="ListOfLikes">@item.Likes.First().User.UserFirstName @item.Likes.First().User.UserLastName liked this</a>
+                                }
+                            }
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="likesList_@item.PostId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Likes</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            @foreach(var like in item.Likes)
+                                            {
+                                            <div class="row p-0 m-0">
+                                                @*@if (like.User.UserPicture != null)
+                                                {
+                                                    <img class="col-2 PrfilePic" src="../Images/@like.User.UserPicture" />
+                                                }
+                                                else
+                                                {
+                                                    string source = $"../Images/default_{like.User.UserGender}.png";
+                                                    <img class="col-2 PrfilePic" src="@source" />
+                                                }*@
+                                                <img class="col-2 PrfilePic" src="../Images/@like.User.UserPicture" />
+
+                                                <a class="col-10 text-dark mt-3" asp-action="" asp-controller="Profile">@like.User.UserFirstName @like.User.UserLastName</a>
+                                                <hr class="col-12 p-0" />
+                                            </div>
+                                            }
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
                         </div>
                         <hr class="col-11 ml-3 mt-3 p-0 m-0" />
                     </div>
