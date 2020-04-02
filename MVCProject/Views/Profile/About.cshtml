@@ -83,7 +83,7 @@
                 </button>
             </div>
             <div class="modal-body text-center row">
-                <form method="post" asp-action="Edit" id="editInfoForm">
+                <form method="post" asp-action="Edit" asp-controller="Profile" id="editInfoForm">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     @*<input type="hidden" asp-for="Id" />
                     <input type="hidden" asp-for="PasswordHash" />
