@@ -36,6 +36,7 @@ namespace MVCProject.DataRepositories
             try
             {
                 context.Likes.Add(t);
+                context.SaveChanges();
             }
             catch (Exception e)
             {
@@ -67,6 +68,19 @@ namespace MVCProject.DataRepositories
                 throw e;
             }
         }
+
+       public Like SelectLike(string userId, int postId)
+        {
+            try
+            {
+                return context.Likes.FirstOrDefault(like => like.PostId == postId && like.UserId == userId);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
 
         public void Update(int id, Like t)
         {

@@ -15,6 +15,7 @@ namespace MVCProject.DataRepositories
         List<FriendRequest> GetFriendRequestSenders(string userId) => null;
         List<Post> SelectByUserId(string id) => null;
         void Delete(T t);
+        Like SelectLike(string userId, K postId)=> null;
 
     }
 }

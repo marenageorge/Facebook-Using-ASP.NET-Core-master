@@ -17,6 +17,8 @@ namespace MVCProject.Controllers
         private readonly IDataRepository<FriendRequest, string> friendRequestRepository;
         private readonly IDataRepository<User, string> userRepository;
         private readonly IDataRepository<Post, int> postRepository;
+        private readonly IDataRepository<Like, int> likeRepository;
+        private readonly IDataRepository<Comment, int> commentRepository;
         private readonly SignInManager<User> signInManager;
         private readonly UserManager<User> userManager;
         private User currentUser;
@@ -24,12 +26,16 @@ namespace MVCProject.Controllers
         public ProfileController(IDataRepository<FriendRequest, string> friendRequestRepository,
                                  IDataRepository<User, string> userRepository,
                                  IDataRepository<Post, int> postRepository,
+                                 IDataRepository<Like, int> likeRepository,
+                                 IDataRepository<Comment, int> commentRepository,
                                  SignInManager<User> signInManager,
                                  UserManager<User> userManager)
         {
             this.friendRequestRepository = friendRequestRepository;
             this.userRepository = userRepository;
             this.postRepository = postRepository;
+            this.likeRepository = likeRepository;
+            this.commentRepository = commentRepository;
             this.signInManager = signInManager;
             this.userManager = userManager;
 
@@ -73,13 +79,21 @@ namespace MVCProject.Controllers
                 return NotFound();
             }
             users.Remove(GetCurrentUser());
-            int x;
+
             return View(users);
         }
 
         [HttpGet]
         public IActionResult Profile()
         {
+            User u = GetCurrentUser();
+            u.Posts = u.Posts.OrderByDescending(p => p.PostDateTime).ToList();
+            foreach(var p in u.Posts)
+            {
+                p.Likes = likeRepository.SelectAll().Where(x => x.PostId == p.PostId).ToList();
+                p.Comments = commentRepository.SelectAll().Where(x => x.PostId == p.PostId).ToList();
+            }
+            //u.Comments = u.Comments.OrderByDescending(p => p.CommentDateTime).ToList();
             return View(GetCurrentUser());
         }
 
@@ -176,6 +190,64 @@ namespace MVCProject.Controllers
                     friendRequestRepository.Update("", friendRequest);
                 }
             }
+        }
+
+        [HttpPost]
+        public void Like(string UserId, string PostId)
+        {
+
+            var _checkFound = likeRepository.SelectLike(UserId, Convert.ToInt32(PostId));
+            if (_checkFound == null)
+            {
+                Like l = new Like();
+                l.IsLiked = true;
+                l.UserId = UserId;
+                l.PostId = Convert.ToInt32(PostId);
+                likeRepository.Insert(l);
+            }
+            else
+            {
+                if (_checkFound.IsLiked == true)
+                    _checkFound.IsLiked = false;
+                else
+                    _checkFound.IsLiked = true;
+
+                likeRepository.Update(0, _checkFound);
+            }
+        }
+        [HttpPost]
+        public ActionResult RemovePost(int PostId)
+        {
+           
+            var result = postRepository.SelectById(PostId);
+            if (result != null)
+            {
+                result.IsDeleted = true;
+                postRepository.Update(0, result);
+            }
+
+            return Json(result.PostId);
+        }
+        [HttpPost]
+        public ActionResult AddComment(Comment c)
+        {
+            
+            commentRepository.Insert(c);
+
+            return Json(c.CommentId);
+            //return PartialView("Comments");
+        }
+        [HttpPost]
+        public ActionResult RemoveComment(int CommentId)
+        {
+            //var result = db.Comments.SingleOrDefault(Comment => Comment.CommentId == c.CommentId);
+            var result = commentRepository.SelectById(CommentId);
+            if (result != null)
+            {
+                result.IsDeleted = true;
+                commentRepository.Update(0, result);
+            }
+            return Json(result.PostId);
         }
 
     }

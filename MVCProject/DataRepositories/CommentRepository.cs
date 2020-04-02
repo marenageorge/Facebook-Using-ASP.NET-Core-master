@@ -40,6 +40,7 @@ namespace MVCProject.DataRepositories
             try
             {
                 context.Comments.Add(t);
+                context.SaveChanges();
             }
             catch (Exception e)
             {
