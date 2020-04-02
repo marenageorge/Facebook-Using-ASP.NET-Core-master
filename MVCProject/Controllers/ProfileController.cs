@@ -246,6 +246,7 @@ namespace MVCProject.Controllers
             {
                 result.IsDeleted = true;
                 commentRepository.Update(0, result);
+                int x;
             }
             return Json(result.PostId);
         }
